@@ -12,7 +12,7 @@ action :add do
     end
 
     # TODO: do something with clamav
-    
+
     Chef::Log.info('cookbook clamav has been processed.')
   rescue => e
     Chef::Log.error(e.message)
