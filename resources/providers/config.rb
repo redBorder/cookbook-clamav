@@ -4,7 +4,7 @@
 #
 action :add do
   begin
-    #user = new_resource.user
+    # user = new_resource.user
 
     dnf_package 'clamav' do
       action :upgrade
