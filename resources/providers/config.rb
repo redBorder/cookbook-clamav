@@ -8,7 +8,6 @@ action :add do
 
     dnf_package 'clamav' do
       action :upgrade
-      flush_cache[:before]
     end
 
     # TODO: do something with clamav
