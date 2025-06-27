@@ -1,6 +1,11 @@
 cookbook-clamav CHANGELOG
 ===============
 
+## 0.0.3
+
+  - nilsver
+    - [8fdb06f] remove flush cache
+
 ## 0.0.2
 
   - Miguel Negrón
