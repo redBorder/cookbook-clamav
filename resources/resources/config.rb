@@ -7,4 +7,4 @@ unified_mode true
 actions :add, :remove
 default_action :add
 
-attribute :user, kind_of: String, default: 'clamav'
+attribute :user, kind_of: String, default: 'root'
