@@ -55,7 +55,7 @@ action :add do
       command '/usr/bin/freshclam --config-file /etc/freshclam.conf --stdout'
       only_if do
         sigs = Dir['/var/lib/clamav/*.{cvd,cld}']
-        sigs.empty? || sigs.any? { |f| (Time.now - ::File.mtime(f)) > 24*3600 }
+        sigs.empty? || sigs.any? { |f| (Time.now - ::File.mtime(f)) > 24 * 3600 }
       end
       notifies :restart, 'service[clamd@scan]', :delayed
     end
