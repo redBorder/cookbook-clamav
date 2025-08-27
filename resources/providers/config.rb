@@ -9,7 +9,7 @@ action :add do
   begin
     user = new_resource.user
 
-    %w[clamav clamav-freshclam clamd].each do |pkg|
+    %w(clamav clamav-freshclam clamd).each do |pkg|
       dnf_package pkg do
         action :upgrade
       end
@@ -31,9 +31,9 @@ action :add do
       action :create
     end
 
-    template "/etc/clamd.d/scan.conf" do
+    template '/etc/clamd.d/scan.conf' do
       cookbook 'rb-clamav'
-      source "clamd.conf.erb"
+      source 'clamd.conf.erb'
       owner user
       group user
       mode '0644'
@@ -41,9 +41,9 @@ action :add do
       notifies :restart, 'service[clamd@scan]', :delayed
     end
 
-    template "/etc/freshclam.conf" do
+    template '/etc/freshclam.conf' do
       cookbook 'rb-clamav'
-      source "clamscan_freshclam.conf.erb"
+      source 'clamscan_freshclam.conf.erb'
       owner user
       group user
       mode '0644'
@@ -97,7 +97,7 @@ action :remove do
       action [:stop, :disable]
     end
 
-    %w[clamav clamav-freshclam clamd].each do |pkg|
+    %w(clamav clamav-freshclam clamd).each do |pkg|
       dnf_package pkg do
         action :remove
       end
