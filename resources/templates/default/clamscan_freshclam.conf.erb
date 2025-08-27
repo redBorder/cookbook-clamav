@@ -119,9 +119,9 @@ DatabaseMirror db.local.clamav.net
 
 # Proxy settings
 # Default: disabled
-<% if !node["redBorder"]["proxy"].nil? and !node["redBorder"]["proxy"]["address"].nil? and !node["redBorder"]["proxy"]["address"].to_s.empty? %>
-HTTPProxyServer <%= node["redBorder"]["proxy"]["address"] %>
-HTTPProxyPort <%= node["redBorder"]["proxy"]["port"] %>
+<% if node.dig('redBorder','proxy','address').to_s != '' %>
+HTTPProxyServer <%= node['redBorder']['proxy']['address'] %>
+HTTPProxyPort   <%= node['redBorder']['proxy']['port'] %>
 <% end %>
 
 #HTTPProxyUsername myusername
