@@ -2,17 +2,70 @@
 #
 # Provider:: config
 #
+
+# include  ClamAV::Helper
+
 action :add do
   begin
-    # user = new_resource.user
+    user = new_resource.user
 
-    dnf_package 'clamav' do
-      action :upgrade
+    %w(clamav clamav-freshclam clamd).each do |pkg|
+      dnf_package pkg do
+        action :upgrade
+      end
     end
 
-    # TODO: do something with clamav
+    directory '/var/lib/clamav' do
+      owner 'clamupdate'
+      group 'clamupdate'
+      mode '0775'
+      recursive true
+      action :create
+    end
 
-    Chef::Log.info('cookbook clamav has been processed.')
+    directory '/var/log/clamav' do
+      owner 'clamscan'
+      group 'clamscan'
+      mode '0775'
+      recursive true
+      action :create
+    end
+
+    template '/etc/clamd.d/scan.conf' do
+      cookbook 'rb-clamav'
+      source 'clamd.conf.erb'
+      owner user
+      group user
+      mode '0644'
+      retries 2
+      notifies :restart, 'service[clamd@scan]', :delayed
+    end
+
+    template '/etc/freshclam.conf' do
+      cookbook 'rb-clamav'
+      source 'clamscan_freshclam.conf.erb'
+      owner user
+      group user
+      mode '0644'
+      retries 2
+      notifies :restart, 'service[clamav-freshclam]', :delayed
+    end
+
+    service 'clamav-freshclam' do
+      service_name 'clamav-freshclam'
+      ignore_failure true
+      supports status: true, reload: true, restart: true, enable: true
+      action [:enable, :start]
+    end
+
+    service 'clamd@scan' do
+      service_name 'clamd@scan'
+      ignore_failure true
+      supports status: true, reload: true, restart: true, enable: true
+      action [:enable, :start]
+    end
+
+    Chef::Log.info('ClamAV cookbook has been processed.')
   rescue => e
     Chef::Log.error(e.message)
   end
@@ -21,9 +74,27 @@ end
 action :remove do
   begin
 
-    # TODO : service stop
+    service 'clamav-freshclam' do
+      service_name 'clamav-freshclam'
+      ignore_failure true
+      supports status: true, enable: true
+      action [:stop, :disable]
+    end
 
-    Chef::Log.info('cookbook clamav has been processed.')
+    service 'clamd@scan' do
+      service_name 'clamd@scan'
+      ignore_failure true
+      supports status: true, enable: true
+      action [:stop, :disable]
+    end
+
+    %w(clamav clamav-freshclam clamd).each do |pkg|
+      dnf_package pkg do
+        action :remove
+      end
+    end
+
+    Chef::Log.info('ClamAV cookbook has been processed.')
   rescue => e
     Chef::Log.error(e.message)
   end
