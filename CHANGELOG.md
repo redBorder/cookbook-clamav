@@ -1,6 +1,12 @@
 cookbook-clamav CHANGELOG
 ===============
 
+## 0.1.1
+
+  - ljblancoredborder
+    - [5469db4] remove unnecessary file
+    - [556a9b6] Setting group virusgroup for clam to include logstash
+
 ## 0.1.0
 
   - Daniel Castro
