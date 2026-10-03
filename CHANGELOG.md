@@ -1,6 +1,11 @@
 cookbook-clamav CHANGELOG
 ===============
 
+## 0.1.2
+
+  - manegron
+    - [3659ca2] Upload cookbook only if opscode-erchef is active
+
 ## 0.1.1
 
   - ljblancoredborder
