@@ -1,6 +1,14 @@
 cookbook-clamav CHANGELOG
 ===============
 
+## 0.1.3
+
+  - Miguel Negrón
+    - [8dc20d0] Merge pull request #7 from redBorder/improvement/#26794_disable_clamd_by_default
+  - manegron
+    - [8dc20d0] Merge pull request #7 from redBorder/improvement/#26794_disable_clamd_by_default
+    - [518a32e] Dont remove packages on remove action
+
 ## 0.1.2
 
   - manegron
