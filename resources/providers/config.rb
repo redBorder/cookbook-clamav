@@ -88,12 +88,6 @@ action :remove do
       action [:stop, :disable]
     end
 
-    %w(clamav clamav-freshclam clamd).each do |pkg|
-      dnf_package pkg do
-        action :remove
-      end
-    end
-
     Chef::Log.info('ClamAV cookbook has been processed.')
   rescue => e
     Chef::Log.error(e.message)
